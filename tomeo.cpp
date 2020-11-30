@@ -17,6 +17,8 @@
 #include <string>
 #include <vector>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QLabel>
+
 #include <QtWidgets/QHBoxLayout>
 #include <QtCore/QFileInfo>
 #include <QtWidgets/QFileIconProvider>
@@ -105,12 +107,19 @@ int main(int argc, char *argv[]) {
         exit(-1);
     }
 
+
+
+
+
     // the widget that will show the video
     QVideoWidget *videoWidget = new QVideoWidget;
 
     // the QMediaPlayer which controls the playback
     ThePlayer *player = new ThePlayer;
+
     player->setVideoOutput(videoWidget);
+    //videoWidget->layout()->setAlignment(Qt::AlignTop);
+    //player->play();
 
     // a row of buttons
     QWidget *buttonWidget = new QWidget();
@@ -124,14 +133,27 @@ int main(int argc, char *argv[]) {
 
     //QLabel *upNextLabel = new QLabel(buttonWidget);
     printf("number of vidoes &d", videos.size());
+
+
+    QLabel *upNextTitle = new QLabel(buttonWidget);
+    upNextTitle->setText("Up next:");
+    upNextTitle->setGeometry(0,0,20,20);
+    upNextTitle->setStyleSheet("font-weight: bold; font: 30pt Arial Bold");
+    layout->addWidget(upNextTitle);
+
+
+
     // create the four buttons
     for ( int i = 0; i < videos.size(); i++ ) {
         TheButton *button = new TheButton(buttonWidget);
-        button->setIconSize(QSize(button->height() * 1.81, button->height()));
+        button->setStyleSheet(
+                    "text-align:left;"
+                    );
         button->connect(button, SIGNAL(jumpTo(TheButtonInfo* )), player, SLOT (jumpTo(TheButtonInfo* ))); // when clicked, tell the player to play.
         buttons.push_back(button);
         layout->addWidget(button);
         button->init(&videos.at(i));
+
     }
 
     // tell the player what buttons and videos are available
@@ -144,7 +166,9 @@ int main(int argc, char *argv[]) {
     window.setWindowTitle("tomeo");
     window.setMinimumSize(800, 680);
 
-    // add the video and the buttons to the top level widget
+
+
+    // add the video and the buttons to the top level
     top->addWidget(videoWidget);
     top->addWidget(buttonWidget);
 
