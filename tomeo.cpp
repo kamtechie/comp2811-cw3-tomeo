@@ -62,10 +62,21 @@ vector<TheButtonInfo> getInfoIn (string loc) {
                         out . push_back(TheButtonInfo( url , ico  ) ); // add to the output list
                     }
                     else
-                        qDebug() << "warning: skipping video because I couldn't process thumbnail " << thumb << endl;
+                        qDebug() << "1 warning: skipping video because I couldn't process thumbnail " << thumb << endl;
             }
-            else
-                qDebug() << "warning: skipping video because I couldn't find thumbnail " << thumb << endl;
+            else{
+                QString missingThumb = f.left( f.lastIndexOf( QChar('/') ) ) +"/missing.png";
+
+                QImageReader *missingThumbReader = new QImageReader(missingThumb);
+                    QImage missingThumbSprite = missingThumbReader->read(); // read the thumbnail
+                    if (!missingThumbSprite.isNull()) {
+                        QIcon* ico = new QIcon(QPixmap::fromImage(missingThumbSprite)); // voodoo to create an icon for the button
+                        QUrl* url = new QUrl(QUrl::fromLocalFile( f )); // convert the file location to a generic url
+                        out . push_back(TheButtonInfo( url , ico  ) ); // add to the output list
+                    }
+                    else
+                        qDebug() << "2 warning: skipping video because I couldn't process thumbnail " << missingThumb << endl;
+            }
         }
     }
 
