@@ -172,17 +172,28 @@ int main(int argc, char *argv[]) {
 
     // create the main window and layout
     QWidget window;
-    QHBoxLayout *top = new QHBoxLayout();
-    window.setLayout(top);
-    window.setWindowTitle("tomeo");
+    QVBoxLayout *mainContainer = new QVBoxLayout();
+    window.setLayout(mainContainer);
+    window.setWindowTitle("Tomeo Editor");
     window.setMinimumSize(800, 680);
 
+    QWidget *navigationWidget = new QWidget();
+    //navigationWidget->setGeometry(0,0,window.width(),20);
+    navigationWidget->setFixedSize(window.width(),50);
+    QLabel *pageTitle = new QLabel(navigationWidget);
+    pageTitle->setText("📷 Tomeo Editor");
+    pageTitle->setGeometry(0,0,navigationWidget->width(),navigationWidget->height());
+    pageTitle->setStyleSheet("font-weight: bold; font: 30pt Arial Bold");
+
+    mainContainer->addWidget(navigationWidget);
 
 
+    QHBoxLayout *videoPreviewContainer = new QHBoxLayout();
     // add the video and the buttons to the top level
-    top->addWidget(videoWidget);
-    top->addWidget(buttonWidget);
+    videoPreviewContainer->addWidget(videoWidget);
+    videoPreviewContainer->addWidget(buttonWidget);
 
+    mainContainer->addLayout(videoPreviewContainer);
     // showtime!
     window.show();
 
