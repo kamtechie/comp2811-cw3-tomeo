@@ -26,10 +26,13 @@ void ThePlayer::shuffle() {
 
         //check if the video is already in the up next
         for (int j=0; j < 4; j++) {
-            if (buttons->at(j)->info->url == i->url) {
+            if (buttons->at(j)->info->url == i->url)
                 dup = 1;
-             }
         }
+
+        //check if the video is already playing
+        if (currentUrl == i->url)
+            dup = 1;
     }
     //change the button
     buttons -> at( updateCount++ % buttons->size() ) -> init( i );
@@ -47,5 +50,6 @@ void ThePlayer::playStateChanged (QMediaPlayer::State ms) {
 
 void ThePlayer::jumpTo (TheButtonInfo* button) {
     setMedia( * button -> url);
+    currentUrl = button->url;
     play();
 }

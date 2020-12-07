@@ -23,6 +23,7 @@ private:
     vector<TheButton*>* buttons;
     QTimer* mTimer;
     long updateCount = 0;
+    QUrl* currentUrl;
 
 public:
     ThePlayer() : QMediaPlayer(NULL) {
