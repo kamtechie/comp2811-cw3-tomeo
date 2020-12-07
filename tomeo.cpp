@@ -155,7 +155,7 @@ int main(int argc, char *argv[]) {
 
 
     // create the four buttons
-    for ( int i = 0; i < videos.size(); i++ ) {
+    for ( int i = 0; i < 4; i++ ) {
         TheButton *button = new TheButton(buttonWidget);
         button->setStyleSheet(
                     "text-align:left;"

@@ -15,8 +15,23 @@ void ThePlayer::setContent(std::vector<TheButton*>* b, std::vector<TheButtonInfo
 
 // change the image and video for one button every one second
 void ThePlayer::shuffle() {
-    TheButtonInfo* i = & infos -> at (rand() % infos->size() );
+    int dup = 1; //duplicate indicator, 0 if not a duplicate, 1 if a duplicate
+    TheButtonInfo* i;
 //        setMedia(*i->url);
+
+    while (dup == 1) {
+        dup = 0;
+        //get a new random video
+        i = & infos -> at (rand() % infos->size() );
+
+        //check if the video is already in the up next
+        for (int j=0; j < 4; j++) {
+            if (buttons->at(j)->info->url == i->url) {
+                dup = 1;
+             }
+        }
+    }
+    //change the button
     buttons -> at( updateCount++ % buttons->size() ) -> init( i );
 }
 
