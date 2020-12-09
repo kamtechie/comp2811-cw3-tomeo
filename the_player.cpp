@@ -11,11 +11,6 @@ ThePlayer::ThePlayer() : QMediaPlayer(NULL) {
 
     connect (this, SIGNAL (stateChanged(QMediaPlayer::State)), this, SLOT (playStateChanged(QMediaPlayer::State)) );
 
-    mTimer = new QTimer(NULL);
-    mTimer->setInterval(1000); // 1000ms is one second between ...
-    mTimer->start();
-    connect( mTimer, SIGNAL (timeout()), SLOT ( shuffle() ) ); // ...running shuffle method
-
     videoWidget = new QVideoWidget;
     this->setVideoOutput(videoWidget);
 
@@ -67,31 +62,6 @@ void ThePlayer::setContent(std::vector<TheButton*>* b, std::vector<TheButtonInfo
     buttons = b;
     infos = i;
     jumpTo(buttons -> at(0) -> info);
-}
-
-// change the image and video for one button every one second
-void ThePlayer::shuffle() {
-    int dup = 1; //duplicate indicator, 0 if not a duplicate, 1 if a duplicate
-    TheButtonInfo* i;
-//        setMedia(*i->url);
-
-    while (dup == 1) {
-        dup = 0;
-        //get a new random video
-        i = & infos -> at (rand() % infos->size() );
-
-        //check if the video is already in the up next tab
-        for (int j=0; j < 4; j++) {
-            if (buttons->at(j)->info->url == i->url)
-                dup = 1;
-        }
-
-        //check if the video is already playing
-        if (currentUrl == i->url)
-            dup = 1;
-    }
-    //change the button
-    buttons -> at( updateCount++ % buttons->size() ) -> init( i );
 }
 
 void ThePlayer::playStateChanged (QMediaPlayer::State ms) {

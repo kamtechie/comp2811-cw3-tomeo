@@ -152,10 +152,7 @@ int main(int argc, char *argv[]) {
     upNextTitle->setStyleSheet("font-weight: bold; font: 30pt Arial Bold");
     layout->addWidget(upNextTitle);
 
-
-
-    // create the four buttons
-    for ( int i = 0; i < 4; i++ ) {
+    for (TheButtonInfo video: videos){
         TheButton *button = new TheButton(buttonWidget);
         button->setStyleSheet(
                     "text-align:left;"
@@ -163,9 +160,22 @@ int main(int argc, char *argv[]) {
         button->connect(button, SIGNAL(jumpTo(TheButtonInfo* )), player, SLOT (jumpTo(TheButtonInfo* ))); // when clicked, tell the player to play.
         buttons.push_back(button);
         layout->addWidget(button);
-        button->init(&videos.at(i));
-
+        button->init(&video);
     }
+
+    // create the four buttons
+//    for ( int i = 0; i < videos.size(); i++ ) {
+//        TheButton *button = new TheButton(buttonWidget);
+//        button->setStyleSheet(
+//                    "text-align:left;"
+//                    );
+//        button->connect(button, SIGNAL(jumpTo(TheButtonInfo* )), player, SLOT (jumpTo(TheButtonInfo* ))); // when clicked, tell the player to play.
+//        buttons.push_back(button);
+//        layout->addWidget(button);
+//        button->init(&videos.at(i));
+
+//    }
+
 
     // tell the player what buttons and videos are available
     player->setContent(&buttons, & videos);

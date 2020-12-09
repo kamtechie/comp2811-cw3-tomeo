@@ -44,9 +44,6 @@ public:
     QWidget* getDisplay() const { return display; }
 
 private slots:
-
-    // change the image and video for one button every one second
-    void shuffle();
     void playClicked();
     void ffClicked();
     void rewindClicked();
