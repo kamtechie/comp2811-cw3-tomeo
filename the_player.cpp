@@ -61,7 +61,9 @@ ThePlayer::ThePlayer() : QMediaPlayer(NULL) {
 void ThePlayer::setContent(std::vector<TheButton*>* b, std::vector<TheButtonInfo>* i) {
     buttons = b;
     infos = i;
-    jumpTo(buttons -> at(0) -> info);
+    currentInfo = buttons->at(0)->info;
+    setMedia(* currentInfo->url);
+    play();
     buttons->at(0)->init(&infos->at(infos->size()-1));
 }
 
@@ -140,6 +142,15 @@ void ThePlayer::restartClicked() {
 }
 
 void ThePlayer::jumpTo (TheButtonInfo* button) {
+    //swap clicked button info with current playing info
+    for (int i=0; i < buttons->size(); i++) {
+        if (buttons->at(i)->info == button) {
+            for (int j=i; j < buttons->size()-1; j++)
+                buttons->at(j)->init(buttons->at(j+1)->info);
+            buttons->at(buttons->size()-1)->init(currentInfo);
+        }
+    }
+
     currentInfo = button;
     setMedia(* currentInfo->url);
     setPlaybackRate(1);
