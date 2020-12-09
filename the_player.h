@@ -25,7 +25,7 @@ private:
     vector<TheButton*>* buttons;
     QTimer* mTimer;
     long updateCount = 0;
-    QUrl* currentUrl; //url of the video currently playing
+    TheButtonInfo* currentInfo; //info of the video currently playing
 
     QVideoWidget *videoWidget = 0;
     QPushButton *playButton = 0;

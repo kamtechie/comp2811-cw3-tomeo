@@ -153,7 +153,7 @@ int main(int argc, char *argv[]) {
     layout->addWidget(upNextTitle);
 
     // create buttons for all videos
-    for ( unsigned long long i = 0; i < videos.size(); i++ ) {
+    for ( unsigned long long i = 0; i < videos.size()-1; i++ ) {
         TheButton *button = new TheButton(buttonWidget);
         button->setStyleSheet(
                     "text-align:left;"

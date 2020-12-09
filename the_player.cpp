@@ -62,6 +62,7 @@ void ThePlayer::setContent(std::vector<TheButton*>* b, std::vector<TheButtonInfo
     buttons = b;
     infos = i;
     jumpTo(buttons -> at(0) -> info);
+    buttons->at(0)->init(&infos->at(infos->size()-1));
 }
 
 void ThePlayer::playStateChanged (QMediaPlayer::State ms) {
@@ -118,21 +119,29 @@ void ThePlayer::rewindClicked() {
 }
 
 void ThePlayer::nextClicked() {
-    currentUrl = buttons->at(0)->info->url;
-    setMedia(* currentUrl);
+    TheButtonInfo *temp = currentInfo;
+
+    currentInfo = buttons->at(0)->info;
+    setMedia(* currentInfo->url);
     setPlaybackRate(1);
     play();
+
+    //move all of the videos in up next up by 1 and replace last video with the one that was previously playing
+    for (int i=0; i < buttons->size()-1; i++) {
+        buttons->at(i)->init(buttons->at(i+1)->info);
+    }
+    buttons->at(buttons->size()-1)->init(temp);
 }
 
 void ThePlayer::restartClicked() {
-    setMedia(*currentUrl);
+    setMedia(*currentInfo->url);
     setPlaybackRate(1);
     play();
 }
 
 void ThePlayer::jumpTo (TheButtonInfo* button) {
-    currentUrl = button->url;
-    setMedia(* currentUrl);
+    currentInfo = button;
+    setMedia(* currentInfo->url);
     setPlaybackRate(1);
     play();
 }
