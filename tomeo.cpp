@@ -29,6 +29,7 @@
 #include <QtCore/QDirIterator>
 #include "the_player.h"
 #include "the_button.h"
+#include "the_playbackcontroller.h"
 
 
 using namespace std;
@@ -122,13 +123,13 @@ int main(int argc, char *argv[]) {
 
 
 
-    // the widget that will show the video
+    // the widget that will show the video (created in the play now)
     QVideoWidget *videoWidget = new QVideoWidget;
 
     // the QMediaPlayer which controls the playback
     ThePlayer *player = new ThePlayer;
 
-    player->setVideoOutput(videoWidget);
+    //player->setVideoOutput(videoWidget);
     //videoWidget->layout()->setAlignment(Qt::AlignTop);
     //player->play();
 
@@ -143,7 +144,7 @@ int main(int argc, char *argv[]) {
 
 
     //QLabel *upNextLabel = new QLabel(buttonWidget);
-    printf("number of vidoes &d", videos.size());
+    //printf("number of vidoes &d", videos.size());
 
 
     QLabel *upNextTitle = new QLabel(buttonWidget);
@@ -188,9 +189,11 @@ int main(int argc, char *argv[]) {
     mainContainer->addWidget(navigationWidget);
 
 
+    QWidget *playerDisplay = player->getDisplay();
     QHBoxLayout *videoPreviewContainer = new QHBoxLayout();
     // add the video and the buttons to the top level
-    videoPreviewContainer->addWidget(videoWidget);
+    //videoPreviewContainer->addWidget(videoWidget);
+    videoPreviewContainer->addWidget(playerDisplay);
     videoPreviewContainer->addWidget(buttonWidget);
 
     mainContainer->addLayout(videoPreviewContainer);

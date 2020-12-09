@@ -9,8 +9,11 @@
 #include <QApplication>
 #include <QMediaPlayer>
 #include "the_button.h"
+#include "the_playbackcontroller.h"
 #include <vector>
 #include <QTimer>
+#include <QVideoWidget>
+#include <QVBoxLayout>
 
 using namespace std;
 
@@ -23,31 +26,37 @@ private:
     vector<TheButton*>* buttons;
     QTimer* mTimer;
     long updateCount = 0;
-    QUrl* currentUrl;
+    QUrl* currentUrl; //url of the video currently playing
+
+    QVideoWidget *videoWidget = 0;
+    QPushButton *playButton = 0;
+    QPushButton *ffButton = 0;
+    QPushButton *rewindButton = 0;
+    QPushButton *nextButton = 0;
+    QPushButton *restartButton = 0;
+    QWidget *display = 0;
 
 public:
-    ThePlayer() : QMediaPlayer(NULL) {
-        setVolume(0); // be slightly less annoying
-        connect (this, SIGNAL (stateChanged(QMediaPlayer::State)), this, SLOT (playStateChanged(QMediaPlayer::State)) );
-
-        mTimer = new QTimer(NULL);
-        mTimer->setInterval(1000); // 1000ms is one second between ...
-        mTimer->start();
-        connect( mTimer, SIGNAL (timeout()), SLOT ( shuffle() ) ); // ...running shuffle method
-    }
+    ThePlayer();
 
     // all buttons have been setup, store pointers here
     void setContent(vector<TheButton*>* b, vector<TheButtonInfo>* i);
+
+    QWidget* getDisplay() const { return display; }
 
 private slots:
 
     // change the image and video for one button every one second
     void shuffle();
+    void playClicked();
+    void ffClicked();
+    void rewindClicked();
+    void nextClicked();
+    void restartClicked();
 
     void playStateChanged (QMediaPlayer::State ms);
 
 public slots:
-
     // start playing this ButtonInfo
     void jumpTo (TheButtonInfo* button);
 };
