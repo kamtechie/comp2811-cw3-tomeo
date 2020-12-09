@@ -9,7 +9,6 @@
 #include <QApplication>
 #include <QMediaPlayer>
 #include "the_button.h"
-#include "the_playbackcontroller.h"
 #include <vector>
 #include <QTimer>
 #include <QVideoWidget>

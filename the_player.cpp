@@ -3,7 +3,6 @@
 //
 
 #include "the_player.h"
-#include "the_playbackcontroller.h"
 
 using namespace std;
 
