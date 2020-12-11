@@ -26,6 +26,7 @@ public:
     TheButtonInfo* info;
 
      TheButton(QWidget *parent) :  QPushButton(parent) {
+         parent->setStyleSheet("QPushButton { background-color: #3949ab; color: white;} QPushButton:hover {background-color: #6f74dd;}");
          setIconSize(QSize(200,110));
          connect(this, SIGNAL(released()), this, SLOT (clicked() )); // if QPushButton clicked...then run clicked() below
     }
