@@ -29,6 +29,8 @@
 #include <QtCore/QDirIterator>
 #include "the_player.h"
 #include "the_button.h"
+#include <QScrollArea>
+#include <QPalette>
 
 
 using namespace std;
@@ -185,13 +187,17 @@ int main(int argc, char *argv[]) {
 
     mainContainer->addWidget(navigationWidget);
 
-
     QWidget *playerDisplay = player->getDisplay();
     QHBoxLayout *videoPreviewContainer = new QHBoxLayout();
     // add the video and the buttons to the top level
     //videoPreviewContainer->addWidget(videoWidget);
     videoPreviewContainer->addWidget(playerDisplay);
-    videoPreviewContainer->addWidget(buttonWidget);
+
+    QScrollArea *scrollArea = new QScrollArea;
+    scrollArea->setBackgroundRole(QPalette::Dark);
+    scrollArea->setWidget(buttonWidget);
+    scrollArea->setFixedWidth(295);
+    videoPreviewContainer->addWidget(scrollArea);
 
     mainContainer->addLayout(videoPreviewContainer);
     // showtime!
