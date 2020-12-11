@@ -14,29 +14,36 @@ ThePlayer::ThePlayer() : QMediaPlayer(NULL) {
     videoWidget = new QVideoWidget;
     this->setVideoOutput(videoWidget);
 
+    const QString qVidButtonStyleSheet = "QPushButton { background-color: #3949ab; color: white; border-radius: 8px;} QPushButton:hover {background-color: #6f74dd;}";
+
     //set up the playback buttons
     playButton = new QPushButton;
     playButton->setIconSize(QSize(90,90));
+    playButton->setStyleSheet(qVidButtonStyleSheet);
     playButton->setIcon(QIcon((":/playback_images/pause.png")));
     connect(playButton, SIGNAL (released()), this, SLOT (playClicked()));
 
     ffButton = new QPushButton;
     ffButton->setIconSize(QSize(90,90));
+    ffButton->setStyleSheet(qVidButtonStyleSheet);
     ffButton->setIcon(QIcon((":/playback_images/ff.png")));
     connect(ffButton, SIGNAL (released()), this, SLOT (ffClicked()));
 
     rewindButton = new QPushButton;
     rewindButton->setIconSize(QSize(90,90));
+    rewindButton->setStyleSheet(qVidButtonStyleSheet);
     rewindButton->setIcon(QIcon((":/playback_images/rewind.png")));
     connect(rewindButton, SIGNAL (released()), this, SLOT (rewindClicked()));
 
     nextButton = new QPushButton;
     nextButton->setIconSize(QSize(90,90));
+    nextButton->setStyleSheet(qVidButtonStyleSheet);
     nextButton->setIcon(QIcon((":/playback_images/next.png")));
     connect(nextButton, SIGNAL (released()), this, SLOT (nextClicked()));
 
     restartButton = new QPushButton;
     restartButton->setIconSize(QSize(90,90));
+    restartButton->setStyleSheet(qVidButtonStyleSheet);
     restartButton->setIcon(QIcon((":/playback_images/restart.png")));
     connect(restartButton, SIGNAL (released()), this, SLOT (restartClicked()));
 
